@@ -100,14 +100,14 @@ function ProductPage() {
             <div className="mt-10 space-y-2">
               <Accordion title="Fragrance notes">
                 <ul className="space-y-2">
-                  {product.notes.map((n) => <li key={n} className="flex gap-3"><span className="text-gold">·</span>{n}</li>)}
+                  {product.notes.map((n: string) => <li key={n} className="flex gap-3"><span className="text-gold">·</span>{n}</li>)}
                 </ul>
               </Accordion>
               <Accordion title="Spiritual mood">{product.mood}</Accordion>
               <Accordion title="Burn experience">{product.burn}</Accordion>
               <Accordion title="Ingredients">
                 <ul className="space-y-2">
-                  {product.ingredients.map((n) => <li key={n} className="flex gap-3"><span className="text-gold">·</span>{n}</li>)}
+                  {product.ingredients.map((n: string) => <li key={n} className="flex gap-3"><span className="text-gold">·</span>{n}</li>)}
                 </ul>
               </Accordion>
               <Accordion title="Ritual recommendation">{product.ritual}</Accordion>
