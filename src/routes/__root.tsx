@@ -79,7 +79,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Agniveda crafts premium, charcoal-free Ayurvedic incense imported from India — a sacred ritual reimagined for modern homes.",
       },
       { name: "author", content: "Agniveda" },
-      { property: "og:title", content: "Agniveda — Divine. Timeless. Pure." },
+      { property: "og:title", content: "Agniveda — Divine. Timeless. Pure. Handcrafted Ayurvedic Incense" },
       {
         property: "og:description",
         content: "Premium handcrafted Ayurvedic incense, imported from India.",
@@ -87,6 +87,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Agniveda" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Agniveda — Divine. Timeless. Pure. Handcrafted Ayurvedic Incense" },
+      { name: "description", content: "A premium, frontend-only website for AGNIVEDA, a luxury Ayurvedic incense brand." },
+      { property: "og:description", content: "A premium, frontend-only website for AGNIVEDA, a luxury Ayurvedic incense brand." },
+      { name: "twitter:description", content: "A premium, frontend-only website for AGNIVEDA, a luxury Ayurvedic incense brand." },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
