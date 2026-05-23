@@ -1,10 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Minus, Plus, Heart } from "lucide-react";
+import { ChevronDown, Minus, Plus, Heart, MessageCircle } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
-import { getProduct, products } from "@/lib/products";
+import { getProduct, products, formatPrice } from "@/lib/products";
+import { useCart, WHATSAPP_NUMBER } from "@/lib/cart";
 
 export const Route = createFileRoute("/shop/$slug")({
   loader: ({ params }) => {

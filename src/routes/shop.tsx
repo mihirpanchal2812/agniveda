@@ -124,14 +124,20 @@ function ShopPage() {
                       </div>
                     </div>
                   </Link>
-                  <div className="mt-6 flex items-start justify-between">
-                    <div>
+                  <div className="mt-6 flex items-start justify-between gap-4">
+                    <div className="min-w-0">
                       <p className="text-[10px] tracking-luxe uppercase text-muted-foreground">{p.category}</p>
                       <h3 className="mt-1 font-display text-2xl">{p.name}</h3>
                       <p className="mt-1 text-sm text-muted-foreground line-clamp-1">{p.tagline}</p>
                     </div>
-                    <span className="text-sm text-foreground/80">{p.price}</span>
+                    <span className="text-sm text-foreground/80 whitespace-nowrap">{formatPrice(p.price)}</span>
                   </div>
+                  <button
+                    onClick={() => { add(p.slug); setOpen(true); }}
+                    className="mt-4 inline-flex items-center gap-2 text-[10px] tracking-luxe uppercase text-foreground hover:text-clay transition"
+                  >
+                    <Plus className="h-3 w-3" /> Add to cart
+                  </button>
                 </div>
               </StaggerItem>
             ))}
