@@ -79,7 +79,7 @@ function Hero() {
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="text-xs tracking-luxe uppercase text-foreground/70"
         >
-          Ayurvedic · Handcrafted in India
+          Ayurvedic · Handcrafted in India · Shipped Globally
         </motion.p>
 
         <motion.h1
@@ -403,7 +403,7 @@ function Instagram() {
         <Reveal>
           <div className="text-center">
             <p className="text-xs tracking-luxe uppercase text-muted-foreground">Follow</p>
-            <h2 className="mt-4 font-display text-4xl md:text-5xl">@agniveda</h2>
+            <h2 className="mt-4 font-display text-4xl md:text-5xl">@agniveda.us</h2>
             <p className="mt-4 mx-auto max-w-md text-sm text-muted-foreground">
               Quiet rituals, sacred objects, and the slow craft behind every blend.
             </p>
@@ -432,7 +432,7 @@ function Newsletter() {
         <Reveal>
           <p className="text-xs tracking-luxe uppercase text-muted-foreground">Stay in touch</p>
           <h2 className="mt-5 font-display text-4xl md:text-5xl text-balance">
-            Slow letters from the workshop.
+            Letters from the workshop.
           </h2>
           <p className="mt-5 max-w-md text-sm text-muted-foreground">
             New blends, seasonal rituals, and quiet notes from India — sent rarely, never in haste.

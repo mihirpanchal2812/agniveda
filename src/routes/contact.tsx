@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Instagram, Mail, MapPin, ArrowRight } from "lucide-react";
+import { Instagram, Mail, ArrowRight } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal } from "@/components/site/Reveal";
 import { FloatingInput } from "./index";
@@ -64,9 +64,9 @@ function ContactPage() {
                 <div className="absolute inset-0 bg-grain opacity-60" />
                 <div className="absolute inset-0 flex items-center justify-center text-center px-6">
                   <div>
-                    <MapPin className="mx-auto h-6 w-6 text-clay" strokeWidth={1.2} />
+                    <Mail className="mx-auto h-6 w-6 text-clay" strokeWidth={1.2} />
                     <p className="mt-3 font-display text-xl">The Agniveda Atelier</p>
-                    <p className="mt-1 text-sm text-muted-foreground">Bengaluru · Karnataka · India</p>
+                    <p className="mt-1 text-sm text-muted-foreground">Online · Worldwide</p>
                   </div>
                 </div>
               </div>
@@ -78,7 +78,7 @@ function ContactPage() {
                 </div>
                 <div>
                   <p className="text-xs tracking-luxe uppercase text-muted-foreground">Instagram</p>
-                  <p className="mt-2 flex items-center gap-2"><Instagram className="h-4 w-4" /> @agniveda</p>
+                  <p className="mt-2 flex items-center gap-2"><Instagram className="h-4 w-4" /> @agniveda.us</p>
                 </div>
               </div>
 

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Facebook, Mail } from "lucide-react";
+import { Instagram, Mail } from "lucide-react";
 
 export function Footer() {
   return (
@@ -30,8 +30,11 @@ export function Footer() {
         <div>
           <div className="text-xs tracking-luxe uppercase text-muted-foreground">Follow</div>
           <ul className="mt-5 space-y-3 text-sm">
-            <li className="flex items-center gap-2"><Instagram className="h-4 w-4" /> @agniveda</li>
-            <li className="flex items-center gap-2"><Facebook className="h-4 w-4" /> Agniveda</li>
+            <li className="flex items-center gap-2">
+              <a href="https://www.instagram.com/agniveda.us/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-clay transition-colors">
+                <Instagram className="h-4 w-4" /> @agniveda.us
+              </a>
+            </li>
             <li className="flex items-center gap-2"><Mail className="h-4 w-4" /> hello@agniveda.co</li>
           </ul>
         </div>
