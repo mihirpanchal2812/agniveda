@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Heart, Search } from "lucide-react";
+import { Heart, Search, Plus } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
-import { products, type Product } from "@/lib/products";
+import { products, formatPrice } from "@/lib/products";
+import { useCart } from "@/lib/cart";
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
@@ -22,21 +23,20 @@ export const Route = createFileRoute("/shop")({
 const categories = ["All", "Spiritual", "Floral", "Woody", "Calming"] as const;
 const sorts = ["Featured", "Price · Low to High", "Price · High to Low", "Name"] as const;
 
-function priceNum(p: Product) {
-  return parseInt(p.price.replace(/[^\d]/g, ""), 10);
-}
 
 function ShopPage() {
   const [cat, setCat] = useState<(typeof categories)[number]>("All");
   const [sort, setSort] = useState<(typeof sorts)[number]>("Featured");
   const [q, setQ] = useState("");
 
+  const { add, setOpen } = useCart();
+
   const list = useMemo(() => {
     let l = [...products];
     if (cat !== "All") l = l.filter((p) => p.category === cat);
     if (q.trim()) l = l.filter((p) => p.name.toLowerCase().includes(q.toLowerCase()));
-    if (sort === "Price · Low to High") l.sort((a, b) => priceNum(a) - priceNum(b));
-    if (sort === "Price · High to Low") l.sort((a, b) => priceNum(b) - priceNum(a));
+    if (sort === "Price · Low to High") l.sort((a, b) => a.price - b.price);
+    if (sort === "Price · High to Low") l.sort((a, b) => b.price - a.price);
     if (sort === "Name") l.sort((a, b) => a.name.localeCompare(b.name));
     return l;
   }, [cat, sort, q]);
@@ -124,14 +124,20 @@ function ShopPage() {
                       </div>
                     </div>
                   </Link>
-                  <div className="mt-6 flex items-start justify-between">
-                    <div>
+                  <div className="mt-6 flex items-start justify-between gap-4">
+                    <div className="min-w-0">
                       <p className="text-[10px] tracking-luxe uppercase text-muted-foreground">{p.category}</p>
                       <h3 className="mt-1 font-display text-2xl">{p.name}</h3>
                       <p className="mt-1 text-sm text-muted-foreground line-clamp-1">{p.tagline}</p>
                     </div>
-                    <span className="text-sm text-foreground/80">{p.price}</span>
+                    <span className="text-sm text-foreground/80 whitespace-nowrap">{formatPrice(p.price)}</span>
                   </div>
+                  <button
+                    onClick={() => { add(p.slug); setOpen(true); }}
+                    className="mt-4 inline-flex items-center gap-2 text-[10px] tracking-luxe uppercase text-foreground hover:text-clay transition"
+                  >
+                    <Plus className="h-3 w-3" /> Add to cart
+                  </button>
                 </div>
               </StaggerItem>
             ))}

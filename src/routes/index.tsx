@@ -5,7 +5,7 @@ import { ArrowRight, Leaf, Flame, Sparkles, Hand, Mountain, MoveDown } from "luc
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { SmokeAmbient } from "@/components/site/SmokeAmbient";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
-import { products } from "@/lib/products";
+import { products, formatPrice } from "@/lib/products";
 import heroImg from "@/assets/hero-smoke.jpg";
 import ritual1 from "@/assets/ritual-1.jpg";
 import ritual2 from "@/assets/ritual-2.jpg";
@@ -221,7 +221,7 @@ function Featured() {
                   <h3 className="mt-2 font-display text-2xl">{p.name}</h3>
                   <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{p.tagline}</p>
                   <div className="mt-4 flex items-center justify-between">
-                    <span className="text-sm text-foreground/80">{p.price}</span>
+                    <span className="text-sm text-foreground/80">{formatPrice(p.price)}</span>
                     <span className="text-xs tracking-luxe uppercase underline-luxe">View</span>
                   </div>
                 </div>

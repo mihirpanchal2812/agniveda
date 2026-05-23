@@ -1,10 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Minus, Plus, Heart } from "lucide-react";
+import { ChevronDown, Minus, Plus, Heart, MessageCircle } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
-import { getProduct, products } from "@/lib/products";
+import { getProduct, products, formatPrice } from "@/lib/products";
+import { useCart, WHATSAPP_NUMBER } from "@/lib/cart";
 
 export const Route = createFileRoute("/shop/$slug")({
   loader: ({ params }) => {
@@ -34,7 +35,21 @@ function ProductPage() {
   const { product } = Route.useLoaderData();
   const [qty, setQty] = useState(1);
   const [zoom, setZoom] = useState(false);
+  const [added, setAdded] = useState(false);
+  const { add, setOpen } = useCart();
   const related = products.filter((p) => p.slug !== product.slug).slice(0, 3);
+
+  const thumbs = [product.image, product.backImage, product.image, product.backImage];
+  const [activeImg, setActiveImg] = useState(product.image);
+
+  const handleAdd = () => {
+    add(product.slug, qty);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1800);
+  };
+
+  const directMessage = `Hello AGNIVEDA, I'd like to order ${qty} × ${product.name} — ${formatPrice(product.price * qty)} total. Please confirm availability and shipping. Thank you.`;
+  const directWa = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(directMessage)}`;
 
   return (
     <SiteLayout>
@@ -47,7 +62,7 @@ function ProductPage() {
               onMouseLeave={() => setZoom(false)}
             >
               <img
-                src={product.image}
+                src={activeImg}
                 alt={product.name}
                 className={`h-full w-full object-cover transition-transform duration-[1500ms] ${
                   zoom ? "scale-125" : "scale-100"
@@ -55,10 +70,15 @@ function ProductPage() {
               />
             </div>
             <div className="mt-4 grid grid-cols-4 gap-4">
-              {[product.image, product.image, product.image, product.image].map((src, i) => (
-                <div key={i} className="aspect-square overflow-hidden rounded-sm bg-sand">
+              {thumbs.map((src, i) => (
+                <button
+                  key={i}
+                  onMouseEnter={() => setActiveImg(src)}
+                  onClick={() => setActiveImg(src)}
+                  className={`aspect-square overflow-hidden rounded-sm bg-sand border transition ${activeImg === src ? "border-clay" : "border-transparent"}`}
+                >
                   <img src={src} alt="" className="h-full w-full object-cover" loading="lazy" />
-                </div>
+                </button>
               ))}
             </div>
           </Reveal>
@@ -69,11 +89,12 @@ function ProductPage() {
             {product.sanskrit && (
               <p className="mt-2 font-display text-2xl text-clay/80 italic">{product.sanskrit}</p>
             )}
+            <p className="mt-4 font-display italic text-clay text-lg">{product.tagline}</p>
             <p className="mt-6 text-base leading-relaxed text-muted-foreground">{product.description}</p>
 
             <div className="mt-8 flex items-baseline gap-4">
-              <span className="font-display text-3xl">{product.price}</span>
-              <span className="text-xs tracking-luxe uppercase text-muted-foreground">Bundle of 12</span>
+              <span className="font-display text-3xl">{formatPrice(product.price)}</span>
+              <span className="text-xs tracking-luxe uppercase text-muted-foreground">20 sticks · 25 g</span>
             </div>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -86,15 +107,30 @@ function ProductPage() {
                   <Plus className="h-3.5 w-3.5" />
                 </button>
               </div>
-              <button className="flex-1 min-w-[180px] rounded-full bg-foreground px-8 py-4 text-xs tracking-luxe uppercase text-background transition hover:bg-clay">
-                Add to cart
+              <button
+                onClick={handleAdd}
+                className="flex-1 min-w-[180px] rounded-full bg-foreground px-8 py-4 text-xs tracking-luxe uppercase text-background transition hover:bg-clay"
+              >
+                {added ? "Added ✓" : "Add to cart"}
               </button>
               <button className="rounded-full border border-border p-4 hover:text-clay" aria-label="Wishlist">
                 <Heart className="h-4 w-4" strokeWidth={1.2} />
               </button>
             </div>
-            <button className="mt-4 w-full rounded-full border border-foreground/30 px-8 py-4 text-xs tracking-luxe uppercase hover:border-foreground hover:bg-foreground/5">
-              Checkout · {product.price}
+            <a
+              href={directWa}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-full border border-foreground/30 px-8 py-4 text-xs tracking-luxe uppercase hover:border-foreground hover:bg-foreground/5"
+            >
+              <MessageCircle className="h-4 w-4" strokeWidth={1.4} />
+              Order on WhatsApp · {formatPrice(product.price * qty)}
+            </a>
+            <button
+              onClick={() => { add(product.slug, qty); setOpen(true); }}
+              className="mt-3 w-full text-[10px] tracking-luxe uppercase text-muted-foreground hover:text-clay"
+            >
+              Add & view cart
             </button>
 
             <div className="mt-10 space-y-2">
