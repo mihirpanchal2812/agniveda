@@ -27,9 +27,9 @@ function ContactPage() {
         <div className="container-luxe">
           <Reveal>
             <p className="text-xs tracking-luxe uppercase text-muted-foreground">Contact</p>
-            <h1 className="mt-4 font-display text-5xl md:text-7xl max-w-3xl">Write to us slowly.</h1>
+            <h1 className="mt-4 font-display text-5xl md:text-7xl max-w-3xl">Let's stay in touch.</h1>
             <p className="mt-6 max-w-lg text-base text-muted-foreground">
-              We answer every note by hand, often with the scent of the workshop still on our fingers.
+              Questions about a fragrance, wholesale, or a bespoke order? Send us a note — we read every message and reply within two working days.
             </p>
           </Reveal>
         </div>

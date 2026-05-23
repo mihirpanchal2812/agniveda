@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, ShoppingBag, X } from "lucide-react";
+import { useCart } from "@/lib/cart";
 
 const links = [
   { to: "/", label: "Home" },
@@ -16,6 +17,7 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { location } = useRouterState();
+  const { count, setOpen: setCartOpen } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -63,11 +65,12 @@ export function Navbar() {
         <div className="flex items-center gap-4">
           <button
             aria-label="Cart"
+            onClick={() => setCartOpen(true)}
             className="relative rounded-full p-2 text-foreground/80 hover:text-foreground transition"
           >
             <ShoppingBag className="h-5 w-5" strokeWidth={1.25} />
             <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-accent text-[10px] font-medium flex items-center justify-center text-accent-foreground">
-              0
+              {count}
             </span>
           </button>
           <button
