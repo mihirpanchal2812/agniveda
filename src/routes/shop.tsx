@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Heart, Search } from "lucide-react";
+import { Heart, Search, Plus } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/Reveal";
-import { products, type Product } from "@/lib/products";
+import { products, formatPrice } from "@/lib/products";
+import { useCart } from "@/lib/cart";
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
@@ -22,21 +23,20 @@ export const Route = createFileRoute("/shop")({
 const categories = ["All", "Spiritual", "Floral", "Woody", "Calming"] as const;
 const sorts = ["Featured", "Price · Low to High", "Price · High to Low", "Name"] as const;
 
-function priceNum(p: Product) {
-  return parseInt(p.price.replace(/[^\d]/g, ""), 10);
-}
 
 function ShopPage() {
   const [cat, setCat] = useState<(typeof categories)[number]>("All");
   const [sort, setSort] = useState<(typeof sorts)[number]>("Featured");
   const [q, setQ] = useState("");
 
+  const { add, setOpen } = useCart();
+
   const list = useMemo(() => {
     let l = [...products];
     if (cat !== "All") l = l.filter((p) => p.category === cat);
     if (q.trim()) l = l.filter((p) => p.name.toLowerCase().includes(q.toLowerCase()));
-    if (sort === "Price · Low to High") l.sort((a, b) => priceNum(a) - priceNum(b));
-    if (sort === "Price · High to Low") l.sort((a, b) => priceNum(b) - priceNum(a));
+    if (sort === "Price · Low to High") l.sort((a, b) => a.price - b.price);
+    if (sort === "Price · High to Low") l.sort((a, b) => b.price - a.price);
     if (sort === "Name") l.sort((a, b) => a.name.localeCompare(b.name));
     return l;
   }, [cat, sort, q]);
